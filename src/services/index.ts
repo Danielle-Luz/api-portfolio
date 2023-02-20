@@ -77,4 +77,81 @@ export namespace services {
 
     await connection.query(formattedQuery);
   };
+
+  export const selectDataWithWhere = async (
+    table: string,
+    identifierColumn: string,
+    identifierValue: string,
+    selectedColumns?: string[]
+  ) => {
+    let formattedQuery: string;
+
+    if (selectedColumns) {
+      const queryString = `
+      SELECT %I
+      FROM %I
+      WHERE %I = %L
+      `;
+
+      formattedQuery = format(
+        queryString,
+        selectedColumns,
+        table,
+        identifierColumn,
+        identifierValue
+      );
+    } else {
+      const queryString = `
+      SELECT *
+      FROM %I
+      WHERE %I = %L
+      `;
+
+      formattedQuery = format(
+        queryString,
+        table,
+        identifierColumn,
+        identifierValue
+      );
+    }
+
+    const queryResult: QueryResult<any> = await connection.query(
+      formattedQuery
+    );
+
+    const foundData = queryResult.rows[0];
+
+    return foundData;
+  };
+
+  export const selectDataWithoutWhere = async (
+    table: string,
+    selectedColumns?: string[]
+  ) => {
+    let formattedQuery: string;
+
+    if (selectedColumns) {
+      const queryString = `
+      SELECT %I
+      FROM %I
+      `;
+
+      formattedQuery = format(queryString, selectedColumns, table);
+    } else {
+      const queryString = `
+      SELECT *
+      FROM %I
+      `;
+
+      formattedQuery = format(queryString, table);
+    }
+
+    const queryResult: QueryResult<any> = await connection.query(
+      formattedQuery
+    );
+
+    const foundData = queryResult.rows[0];
+
+    return foundData;
+  };
 }
