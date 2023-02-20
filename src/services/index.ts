@@ -20,7 +20,27 @@ export namespace services {
     );
 
     const insertedData = queryResult.rows[0];
-    
+
     return insertedData;
   };
+
+  export const updateData = async (data: any, table: string, identifierColumn: string, identifierValue: string) => {
+    const columns = Object.keys(data);
+    const values = Object.keys(data);
+
+    const queryString = `
+    UPDATE %I
+    SET (%L) = ROW (%L)
+    WHERE %I = %L
+    RETUNING *
+    `
+
+    const formattedQuery = format(queryString, table, columns, values, identifierColumn, identifierValue);
+
+    const queryResult: QueryResult<any> = await connection.query(formattedQuery);
+
+    const updatedData = queryResult.rows[0];
+
+    return updatedData
+  }
 }
