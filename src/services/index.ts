@@ -24,7 +24,12 @@ export namespace services {
     return insertedData;
   };
 
-  export const updateData = async (data: any, table: string, identifierColumn: string, identifierValue: string) => {
+  export const updateData = async (
+    data: any,
+    table: string,
+    identifierColumn: string,
+    identifierValue: string
+  ) => {
     const columns = Object.keys(data);
     const values = Object.keys(data);
 
@@ -33,14 +38,43 @@ export namespace services {
     SET (%L) = ROW (%L)
     WHERE %I = %L
     RETUNING *
-    `
+    `;
 
-    const formattedQuery = format(queryString, table, columns, values, identifierColumn, identifierValue);
+    const formattedQuery = format(
+      queryString,
+      table,
+      columns,
+      values,
+      identifierColumn,
+      identifierValue
+    );
 
-    const queryResult: QueryResult<any> = await connection.query(formattedQuery);
+    const queryResult: QueryResult<any> = await connection.query(
+      formattedQuery
+    );
 
     const updatedData = queryResult.rows[0];
 
-    return updatedData
-  }
+    return updatedData;
+  };
+
+  export const deleteData = async (
+    table: string,
+    identifierColumn: string,
+    identifierValue: string
+  ) => {
+    const queryString = `
+    DELETE FROM %I
+    WHERE %I = %L
+    `;
+
+    const formattedQuery = format(
+      queryString,
+      table,
+      identifierColumn,
+      identifierValue
+    );
+
+    await connection.query(formattedQuery);
+  };
 }
