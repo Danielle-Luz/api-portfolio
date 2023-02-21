@@ -1,8 +1,5 @@
-import { stack } from "./index.interfaces";
+import { z } from "zod";
+import { projectSchema } from "../schemas/projects.schemas";
 
-export interface iGetProjects {
-  id: number;
-  name: string;
-  url: string;
-  stack_name: stack;
-}
+export type iProject = z.infer<typeof projectSchema.schema>;
+export type iGetProjects = Omit<iProject, "highlight">;
