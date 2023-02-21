@@ -10,3 +10,9 @@ projectsRouter.post(
   middlewares.validateBody(projectSchema.schema),
   projectController.insertProject
 );
+
+projectsRouter.delete(
+  "/:id",
+  middlewares.validateId,
+  projectController.deleteProject
+);
