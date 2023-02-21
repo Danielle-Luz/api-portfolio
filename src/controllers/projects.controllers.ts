@@ -27,4 +27,10 @@ export namespace projectController {
 
     return res.status(200).send(highlightProjects);
   };
+
+  export const insertProject = async (req: Request, res: Response) => {
+    const insertedProject = await services.insertData(req.body, "projects");
+
+    return res.status(201).send(insertedProject);
+  };
 }
