@@ -15,7 +15,7 @@ export namespace middlewares {
     const isNotANumber = isNaN(idAsNumber);
 
     if (isNotANumber || isFloat) {
-      throw new InvalidValues(401, "The id should be a integer number");
+      throw new InvalidValues(400, "The id should be a integer number");
     }
 
     return next();
@@ -24,7 +24,7 @@ export namespace middlewares {
   export const validateBody =
     (schema: ZodTypeAny) =>
     (req: Request, res: Response, next: NextFunction) => {
-      const validatedBody = schema.parse(schema);
+      const validatedBody = schema.parse(req.body);
 
       req.body = validatedBody;
 
@@ -43,7 +43,7 @@ export namespace middlewares {
 
     if (isNotAValidStack) {
       throw new InvalidValues(
-        401,
+        400,
         `The stack should have one of these values: ${stackValidValues.join(
           ", "
         )}`

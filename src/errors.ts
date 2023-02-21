@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { ZodError } from "zod";
+import "express-async-errors";
 
 class AppError {
   statusCode: number;
@@ -16,14 +18,16 @@ export class InvalidValues extends AppError {
   }
 }
 
-export const errorHandler = (error: Error, req: Request, res: Response) => {
+export const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
   let statusCode = 500;
   const errorMessage = { message: "There was a internal server error" };
 
   if (error instanceof AppError) {
     errorMessage.message = error.message;
     statusCode = error.statusCode;
+  } else if (error instanceof ZodError) {
+    return res.status(400).send(error.flatten().fieldErrors);
   }
 
-  res.status(statusCode).send(errorMessage);
+  return res.status(statusCode).send(errorMessage);
 };
