@@ -16,4 +16,15 @@ export namespace projectController {
 
     return res.status(200).send(foundProjects);
   };
+
+  export const getHighlightProjects = async (req: Request, res: Response) => {
+    const highlightProjects = await services.selectDataWithWhere(
+      "projects",
+      "highlight",
+      "true",
+      selectedProjectFields
+    );
+
+    return res.status(200).send(highlightProjects);
+  };
 }
