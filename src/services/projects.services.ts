@@ -25,4 +25,22 @@ export namespace projectsService {
 
     return foundProjects;
   };
+
+  export const getTechnologiesFromProject = async (projectId: number) => {
+    const queryString = `
+    SELECT t."name", t.img
+    FROM technologies t
+    JOIN projects_technologies pt
+    ON pt.technology_id = t.id
+    WHERE pt.project_id = %L
+    `
+          
+    const formattedQuery = format(queryString, projectId);
+
+    const queryResult: QueryResult<any> = await connection.query(formattedQuery);
+
+    const foundTechnologies = queryResult.rows;
+
+    return foundTechnologies;
+  }
 }
