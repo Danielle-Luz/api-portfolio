@@ -11,7 +11,11 @@ projectsRouter.post(
   projectController.insertProject
 );
 
-projectsRouter.get("/:stack", projectController.getProjectsByStack);
+projectsRouter.get(
+  "/:stack",
+  middlewares.validateStack,
+  projectController.getProjectsByStack
+);
 projectsRouter.get("/highlights", projectController.getHighlightProjects);
 
 projectsRouter.delete(
