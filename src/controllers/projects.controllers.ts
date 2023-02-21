@@ -33,4 +33,11 @@ export namespace projectController {
 
     return res.status(201).send(insertedProject);
   };
+
+  export const updateProject = async (req: Request, res: Response) => {
+    const projectId = req.params.id;
+    const updatedProject = await services.updateData(req.body, "projects", "id", projectId);
+
+    return res.status(200).send(updatedProject);
+  };
 }
