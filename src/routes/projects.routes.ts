@@ -7,8 +7,15 @@ export const projectsRouter: Router = Router();
 
 projectsRouter.post(
   "",
-  middlewares.validateBody(projectSchema.schema),
+  middlewares.validateBody(projectSchema.insertSchema),
   projectController.insertProject
+);
+
+projectsRouter.patch(
+  "/:id",
+  middlewares.validateId,
+  middlewares.validateBody(projectSchema.insertSchema),
+  projectController.updateProject
 );
 
 projectsRouter.get(

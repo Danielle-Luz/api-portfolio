@@ -9,4 +9,6 @@ export namespace projectSchema {
     stack_name: z.enum(["Back-end", "Front-end", "Full-stack"]),
     highlight: z.boolean().optional().default(false),
   });
+
+  export const insertSchema = schema.omit({ id: true });
 }
