@@ -2,7 +2,13 @@ import { Request, Response } from "express";
 import { services } from "../services/index.services";
 
 export namespace projectController {
-  const selectedProjectFields = ["id", "name", "url", "stack_name"];
+  const selectedProjectFields = [
+    "id",
+    "name",
+    "url",
+    "description",
+    "stack_name",
+  ];
 
   export const getProjectsByStack = async (req: Request, res: Response) => {
     const searchedStack = req.params.stack;
