@@ -3,5 +3,3 @@ export enum stack {
   "Front-end",
   "Full-stack",
 }
-
-export const stackValues = ["Back-end", "Front-end", "Full-stack"];
