@@ -10,6 +10,12 @@ class AppError {
   }
 }
 
+export class InvalidValues extends AppError {
+  constructor(statusCode: number, message: string) {
+    super(statusCode, message);
+  }
+}
+
 export const errorHandler = (error: Error, req: Request, res: Response) => {
   let statusCode = 500;
   const errorMessage = { message: "There was a internal server error" };
@@ -18,6 +24,6 @@ export const errorHandler = (error: Error, req: Request, res: Response) => {
     errorMessage.message = error.message;
     statusCode = error.statusCode;
   }
-  
+
   res.status(statusCode).send(errorMessage);
 };

@@ -1,6 +1,6 @@
-import { stack } from "./../interfaces/index.interfaces";
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
+import { InvalidValues } from "../errors";
 
 export namespace middlewares {
   export const validateId = (
@@ -15,11 +15,7 @@ export namespace middlewares {
     const isNotANumber = isNaN(idAsNumber);
 
     if (isNotANumber || isFloat) {
-      const errorMessage = {
-        message: "The id should be a integer number",
-      };
-
-      return res.status(401).send(errorMessage);
+      throw new InvalidValues(401, "The id should be a integer number");
     }
 
     return next();
@@ -46,13 +42,12 @@ export namespace middlewares {
     const isNotAValidStack = !stackValidValues.includes(stack);
 
     if (isNotAValidStack) {
-      const errorMessage = {
-        message: `The stack should have one of these values: ${stackValidValues.join(
+      throw new InvalidValues(
+        401,
+        `The stack should have one of these values: ${stackValidValues.join(
           ", "
-        )}`,
-      };
-
-      return res.status(401).send(errorMessage);
+        )}`
+      );
     }
 
     return next();
