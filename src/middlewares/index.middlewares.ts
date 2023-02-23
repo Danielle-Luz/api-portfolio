@@ -1,3 +1,4 @@
+import { stack } from './../interfaces/index.interfaces';
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
 import { InvalidValues } from "../errors";
@@ -36,10 +37,10 @@ export namespace middlewares {
     res: Response,
     next: NextFunction
   ) => {
-    const stack = req.params.stack;
-    const stackValidValues = Object.values(stack);
+    const searchedStack = req.params.stack;
+    const stackValidValues = ["Back-end", "Front-end", "Full-stack"];
 
-    const isNotAValidStack = !stackValidValues.includes(stack);
+    const isNotAValidStack = !stackValidValues.includes(searchedStack);
 
     if (isNotAValidStack) {
       throw new InvalidValues(

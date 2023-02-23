@@ -18,12 +18,12 @@ projectsRouter.patch(
   projectController.updateProject
 );
 
+projectsRouter.get("/highlights", projectController.getHighlightProjects);
 projectsRouter.get(
   "/:stack",
   middlewares.validateStack,
   projectController.getProjectsByStack
 );
-projectsRouter.get("/highlights", projectController.getHighlightProjects);
 
 projectsRouter.delete(
   "/:id",
