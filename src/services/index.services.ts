@@ -119,7 +119,7 @@ export namespace services {
       formattedQuery
     );
 
-    const foundData = queryResult.rows[0];
+    const foundData = queryResult.rows;
 
     return foundData;
   };
@@ -150,7 +150,7 @@ export namespace services {
       formattedQuery
     );
 
-    const foundData = queryResult.rows[0];
+    const foundData = queryResult.rows;
 
     return foundData;
   };

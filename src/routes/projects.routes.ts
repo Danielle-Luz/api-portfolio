@@ -18,6 +18,7 @@ projectsRouter.patch(
   projectController.updateProject
 );
 
+projectsRouter.get("", projectController.getAllProjects);
 projectsRouter.get("/highlights", projectController.getHighlightProjects);
 projectsRouter.get(
   "/:stack",

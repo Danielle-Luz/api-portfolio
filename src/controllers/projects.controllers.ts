@@ -1,4 +1,3 @@
-import { selectDataWithoutWhere } from './../services/index';
 import { Request, Response } from "express";
 import { services } from "../services/index.services";
 
@@ -9,10 +8,11 @@ export namespace projectController {
     "url",
     "description",
     "stack_name",
+    "highlight"
   ];
 
   export const getAllProjects = async (req: Request, res: Response) => {
-    const allProjects = await selectDataWithoutWhere("projects");
+    const allProjects = await services.selectDataWithoutWhere("projects");
 
     return res.status(200).send(allProjects);
   }
