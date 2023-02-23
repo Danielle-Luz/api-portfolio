@@ -31,6 +31,7 @@ create table if not exists projects (
 create table if not exists technologies (
 	id serial primary key,
 	level_name "level" not null,
+	icon varchar(100) not null,
 	"name" varchar(50) not null,
 	stack_name stack not null
 );
